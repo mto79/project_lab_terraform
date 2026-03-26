@@ -28,3 +28,5 @@ modules
 We use stages for terraform workspaces
 
 If there is one stage than envs/stage can be skipped and all stages can be defined in envs/prd
+
+# how to handle states
