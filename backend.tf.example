@@ -1,0 +1,41 @@
+# Example remote state backends — copy to backend.tf and fill in values.
+# Only ONE backend block should be active at a time.
+
+# ── S3 (AWS) ────────────────────────────────────────────────────────────────
+# terraform {
+#   backend "s3" {
+#     bucket         = "my-terraform-state"
+#     key            = "project_lab/terraform.tfstate"
+#     region         = "eu-west-1"
+#     encrypt        = true
+#     dynamodb_table = "terraform-lock"
+#   }
+# }
+
+# ── Azure Blob Storage ───────────────────────────────────────────────────────
+# terraform {
+#   backend "azurerm" {
+#     resource_group_name  = "tfstate-rg"
+#     storage_account_name = "tfstate<unique>"
+#     container_name       = "tfstate"
+#     key                  = "project_lab.terraform.tfstate"
+#   }
+# }
+
+# ── GCS (Google Cloud) ───────────────────────────────────────────────────────
+# terraform {
+#   backend "gcs" {
+#     bucket = "my-terraform-state"
+#     prefix = "project_lab"
+#   }
+# }
+
+# ── Terraform Cloud / HCP Terraform ─────────────────────────────────────────
+# terraform {
+#   cloud {
+#     organization = "my-org"
+#     workspaces {
+#       name = "project_lab"
+#     }
+#   }
+# }

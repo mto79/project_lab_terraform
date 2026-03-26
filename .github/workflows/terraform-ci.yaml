@@ -1,0 +1,43 @@
+name: Terraform CI
+
+on:
+  pull_request:
+    paths:
+      - 'environments/**'
+      - 'modules/**'
+
+jobs:
+  fmt:
+    name: Format check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.10.0"
+      - name: terraform fmt
+        run: terraform fmt -check -recursive
+
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env_dir:
+          - environments/dev/proxmox
+          - environments/dev/digitalocean
+          - environments/staging/proxmox
+          - environments/staging/digitalocean
+          - environments/prod/proxmox
+          - environments/prod/digitalocean
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.10.0"
+      - name: terraform init
+        run: terraform init -backend=false
+        working-directory: ${{ matrix.env_dir }}
+      - name: terraform validate
+        run: terraform validate
+        working-directory: ${{ matrix.env_dir }}

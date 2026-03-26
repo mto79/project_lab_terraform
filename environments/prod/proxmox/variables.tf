@@ -1,16 +1,16 @@
 variable "pve_api_url" {
-  description = "Proxmox VE API URL (e.g. https://pve.example.com:8006)"
+  description = "Proxmox VE API URL"
   type        = string
 }
 
 variable "pve_api_token" {
-  description = "Proxmox API token in format user@realm!tokenid=secret"
+  description = "Proxmox API token"
   type        = string
   sensitive   = true
 }
 
 variable "proxmox_vms" {
-  description = "List of VM configurations to provision on Proxmox."
+  description = "List of VM configurations."
   type = list(object({
     name        = string
     description = optional(string)
@@ -20,10 +20,10 @@ variable "proxmox_vms" {
 
     cpu_cores = optional(number, 2)
     cpu_type  = optional(string, "x86-64-v2-AES")
-    memory    = optional(number, 2048)
+    memory    = optional(number, 4096)
 
     disk_datastore_id     = optional(string, "local-lvm")
-    disk_size             = optional(number, 30)
+    disk_size             = optional(number, 50)
     network_device_bridge = optional(string, "vmbr0")
 
     image_content_type = string
